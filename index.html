@@ -839,20 +839,25 @@
     #statsGrid { grid-template-columns: 1fr !important; }
   }
 
-  /* ── Stat block dividers — responsive ── */
-  /* Desktop (4-col): right border on first 3 items */
-  #statsGrid .stat-block { border-right: 1px solid var(--line); }
-  #statsGrid .stat-block:last-child { border-right: none; }
+  /* ── Stat grid equal heights + border separators ── */
+  #statsGrid { grid-auto-rows: minmax(0, 1fr); align-items: stretch; }
+  #statsGrid .stat-block {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    min-height: 200px;
+    border-right: 1px solid var(--line);
+  }
+  #statsGrid .stat-block:nth-child(4n) { border-right: none; }
 
-  /* Mobile 2-col: only odd items (left column) get right border */
   @media (max-width: 767px) {
-    #statsGrid .stat-block { border-right: none; border-bottom: 1px solid var(--line); }
-    #statsGrid .stat-block:nth-child(odd)  { border-right: 1px solid var(--line); }
-    #statsGrid .stat-block:last-child,
-    #statsGrid .stat-block:nth-last-child(2):nth-child(odd) { border-bottom: none; }
+    #statsGrid { grid-template-columns: repeat(2,1fr) !important; }
+    #statsGrid .stat-block { border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    #statsGrid .stat-block:nth-child(2n) { border-right: none; }
+    #statsGrid .stat-block:nth-last-child(-n+2) { border-bottom: none; }
   }
 
-  /* 1-col (tiny phones): no right borders at all */
   @media (max-width: 480px) {
     #statsGrid .stat-block { border-right: none !important; border-bottom: 1px solid var(--line); }
     #statsGrid .stat-block:last-child { border-bottom: none; }
